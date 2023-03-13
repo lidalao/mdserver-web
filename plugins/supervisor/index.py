@@ -341,8 +341,9 @@ def restartJob():
     name = args['name']
     status = args['status']
 
-    action = "启动"
-    cmd = supCtl + " restart " + name
+    cmd = supCtl + " stop " + name
+    data = mw.execShell(cmd)
+    cmd = supCtl + " start " + name
     data = mw.execShell(cmd)
 
     if data[1] != '':
@@ -461,8 +462,9 @@ def configTpl():
     pathFile = os.listdir(path)
     tmp = []
     for one in pathFile:
-        file = path + '/' + one
-        tmp.append(file)
+        if one.endswith(".ini"):
+            file = path + '/' + one
+            tmp.append(file)
     return mw.getJson(tmp)
 
 
